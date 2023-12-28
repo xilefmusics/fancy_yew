@@ -2,6 +2,26 @@ use serde::Serialize;
 use serde_json;
 
 #[derive(Debug, Serialize, Clone, Default)]
+pub struct Scale {
+    #[serde(rename = "suggestedMin")]
+    pub suggested_min: usize,
+    #[serde(rename = "suggestedMax")]
+    pub suggested_max: usize,
+}
+
+#[derive(Debug, Serialize, Clone, Default)]
+pub struct Scales {
+    y: Option<Scale>,
+}
+
+#[derive(Debug, Serialize, Clone, Default)]
+pub struct Options {
+    pub responsive: bool,
+    #[serde(rename = "maintainAspectRatio")]
+    pub maintain_aspect_ratio: bool,
+}
+
+#[derive(Debug, Serialize, Clone, Default)]
 pub struct Dataset<'a> {
     pub label: &'a str,
     pub data: &'a [i64], // make generic
@@ -17,7 +37,7 @@ pub struct Config<'a> {
     #[serde(rename = "type")]
     pub chart_type: Option<&'a str>,
     pub data: Option<&'a Data<'a>>,
-    pub options: Option<()>, // not yet implemented
+    pub options: Option<&'a Options>,
 }
 
 pub struct ConfigBuilder<'a> {
@@ -41,7 +61,10 @@ impl<'a> ConfigBuilder<'a> {
                     data: &vec![10, 35, 30, 20, 100, 15],
                 }],
             }),
-            options: None,
+            options: Some(&Options {
+                responsive: true,
+                maintain_aspect_ratio: false,
+            }),
         })
     }
 }
