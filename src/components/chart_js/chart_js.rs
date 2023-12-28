@@ -2,7 +2,7 @@ use gloo::timers::callback::Timeout;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
-#[wasm_bindgen(module = "/src/fancy_yew/my_chart.js")]
+#[wasm_bindgen(module = "/src/components/chart_js/my_chart.js")]
 extern "C" {
     pub type MyChart;
     #[wasm_bindgen(constructor)]
