@@ -1,14 +1,17 @@
+use super::{Config, Data, Dataset};
+
 use gloo::timers::callback::Timeout;
+use serde_json;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
-#[wasm_bindgen(module = "/src/components/chart_js/my_chart.js")]
+#[wasm_bindgen(module = "/src/components/chart_js/chart.js")]
 extern "C" {
     pub type MyChart;
     #[wasm_bindgen(constructor)]
     pub fn new() -> MyChart;
     #[wasm_bindgen(method)]
-    pub fn draw(this: &MyChart, element_id: &str);
+    pub fn draw(this: &MyChart, element_id: &str, config: &str);
 }
 
 pub enum Msg {
@@ -19,6 +22,7 @@ pub struct ChartJs {
     pub chart: MyChart,
     pub input_ref: NodeRef,
     pub draw_timer: Timeout,
+    pub config: String,
 }
 impl Component for ChartJs {
     type Message = Msg;
@@ -33,12 +37,24 @@ impl Component for ChartJs {
             chart: MyChart::new(),
             draw_timer: stand_alone_timer,
             input_ref: NodeRef::default(),
+            config: serde_json::to_string(&Config {
+                chart_type: Some("line"),
+                data: Some(&Data {
+                    labels: &vec![1, 2, 3, 4, 5, 6],
+                    datasets: &vec![&Dataset {
+                        label: "Widget Data",
+                        data: &vec![10, 35, 30, 20, 100, 15],
+                    }],
+                }),
+                options: None,
+            })
+            .unwrap(),
         }
     }
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Msg::Draw => {
-                self.chart.draw("myChart");
+                self.chart.draw("myChart", &self.config);
                 true
             }
             Msg::DoNothing => true,
