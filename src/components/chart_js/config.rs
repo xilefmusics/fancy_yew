@@ -41,13 +41,13 @@ pub struct Config<'a> {
 }
 
 pub struct ConfigBuilder<'a> {
-    config: Config<'a>,
+    _config: Config<'a>,
 }
 
 impl<'a> ConfigBuilder<'a> {
     pub fn new() -> Self {
         Self {
-            config: Config::default(),
+            _config: Config::default(),
         }
     }
 

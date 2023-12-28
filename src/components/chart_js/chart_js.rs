@@ -24,12 +24,12 @@ impl Component for ChartJs {
         }
     }
     fn update(&mut self, _ctx: &Context<Self>, _msg: Self::Message) -> bool {
-        self.chart.draw("myChart", &self.config);
+        self.chart.draw("chart", &self.config);
         true
     }
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
-            <canvas id="myChart"></canvas>
+            <canvas id="chart"></canvas>
         }
     }
 }

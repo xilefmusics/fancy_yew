@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
 use fancy_yew::components::ChartJs;
-use stylist::{css, yew::Global, Style};
+use stylist::{css, yew::Global};
 
 #[function_component]
 fn App() -> Html {
