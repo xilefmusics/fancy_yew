@@ -2,42 +2,29 @@ use serde::Serialize;
 use serde_json;
 
 #[derive(Debug, Serialize, Clone, Default)]
-pub struct Scale {
-    #[serde(rename = "suggestedMin")]
-    pub suggested_min: usize,
-    #[serde(rename = "suggestedMax")]
-    pub suggested_max: usize,
-}
-
-#[derive(Debug, Serialize, Clone, Default)]
-pub struct Scales {
-    y: Option<Scale>,
-}
-
-#[derive(Debug, Serialize, Clone, Default)]
-pub struct Options {
+struct Options {
     pub responsive: bool,
     #[serde(rename = "maintainAspectRatio")]
     pub maintain_aspect_ratio: bool,
 }
 
 #[derive(Debug, Serialize, Clone, Default)]
-pub struct Dataset<'a> {
-    pub label: &'a str,
-    pub data: &'a [i64], // make generic
+struct Dataset<'a> {
+    label: &'a str,
+    data: &'a [i64], // make generic
 }
 
 #[derive(Debug, Serialize, Clone, Default)]
-pub struct Data<'a> {
-    pub labels: &'a [i64], // make generic
-    pub datasets: &'a [&'a Dataset<'a>],
+struct Data<'a> {
+    labels: &'a [i64], // make generic
+    datasets: &'a [&'a Dataset<'a>],
 }
 #[derive(Debug, Serialize, Clone, Default)]
-pub struct Config<'a> {
+struct Config<'a> {
     #[serde(rename = "type")]
-    pub chart_type: Option<&'a str>,
-    pub data: Option<&'a Data<'a>>,
-    pub options: Option<&'a Options>,
+    chart_type: Option<&'a str>,
+    data: Option<&'a Data<'a>>,
+    options: Option<&'a Options>,
 }
 
 pub struct ConfigBuilder<'a> {
