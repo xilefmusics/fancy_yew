@@ -1,7 +1,6 @@
-use super::{Chart, Config, Data, Dataset};
+use super::{Chart, ConfigBuilder};
 
 use gloo::timers::callback::Timeout;
-use serde_json;
 use yew::prelude::*;
 
 pub enum Msg {
@@ -27,18 +26,7 @@ impl Component for ChartJs {
             chart: Chart::new(),
             draw_timer: stand_alone_timer,
             input_ref: NodeRef::default(),
-            config: serde_json::to_string(&Config {
-                chart_type: Some("line"),
-                data: Some(&Data {
-                    labels: &vec![1, 2, 3, 4, 5, 6],
-                    datasets: &vec![&Dataset {
-                        label: "Widget Data",
-                        data: &vec![10, 35, 30, 20, 100, 15],
-                    }],
-                }),
-                options: None,
-            })
-            .unwrap(),
+            config: ConfigBuilder::new().build().unwrap(),
         }
     }
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {

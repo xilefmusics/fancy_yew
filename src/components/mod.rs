@@ -1,3 +1,3 @@
 mod chart_js;
 
-pub use chart_js::{ChartJs, Config, Data, Dataset};
+pub use chart_js::{ChartJs, ConfigBuilder};

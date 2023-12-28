@@ -4,4 +4,4 @@ mod config;
 
 use chart::MyChart as Chart;
 pub use chart_js::ChartJs;
-pub use config::{Config, Data, Dataset};
+pub use config::ConfigBuilder;
