@@ -1,12 +1,16 @@
 use crate::components::{Nav, TopBar};
 
-use gloo::console::log;
 use gloo::utils::window;
 use stylist::Style;
 use yew::prelude::*;
 
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub children: Html,
+}
+
 #[function_component]
-pub fn DefaultLayout() -> Html {
+pub fn DefaultLayout(props: &Props) -> Html {
     let mobile = use_state(|| true);
     let first_render = use_state(|| true);
     {
@@ -49,6 +53,9 @@ pub fn DefaultLayout() -> Html {
                     />
                 </div>
                 <div id="center">
+                    {
+                        props.children.clone()
+                    }
                 </div>
             </div>
         </div>
