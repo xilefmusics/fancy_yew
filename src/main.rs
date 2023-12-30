@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-use fancy_yew::components::{ChartJs, ConfigBuilder};
+use fancy_yew::components::{ChartJs, ConfigBuilder, Nav};
 use stylist::{css, yew::Global};
 
 #[function_component]
@@ -28,8 +28,13 @@ fn App() -> Html {
         .unwrap();
     html! {
         <>
-            <Global css={css!("html,body{padding: 0;margin: 0;border: 0;background: #1e1e1e; overflow: hidden; overscroll-behavior: none; height: 100dvh; }")} />
-            <ChartJs config={chart_config}/>
+            <Global css={css!("html,body{padding: 0;margin: 0;border: 0;background: #1e1e1e; overflow: hidden; overscroll-behavior: none; height: 100dvh; font-family: 'Ubuntu', sans-serif; }")} />
+            <div style={"display: flex; column; height: 100%; width: 100%"}>
+                <Nav />
+                <div style={"flex: 1; height: 100%; width: 100%"}>
+                    <ChartJs config={chart_config}/>
+                </div>
+            </div>
         </>
     }
 }
