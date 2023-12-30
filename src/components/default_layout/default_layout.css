@@ -6,8 +6,21 @@
   width: fit-content;
 }
 
+#left.mobile {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
 #right {
   flex: 1;
+}
+
+#right.mobile {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }
 
 #top {

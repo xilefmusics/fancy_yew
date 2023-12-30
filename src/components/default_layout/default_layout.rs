@@ -1,17 +1,27 @@
 use crate::components::{Nav, TopBar};
 
+use gloo::console::log;
+use gloo::utils::window;
 use stylist::Style;
 use yew::prelude::*;
 
 #[function_component]
 pub fn DefaultLayout() -> Html {
     let mobile = use_state(|| true);
-    let toggle_mobile = {
+    let first_render = use_state(|| true);
+    {
         let mobile = mobile.clone();
-        move |_: MouseEvent| {
-            mobile.set(!*mobile);
-        }
-    };
+        let first_render = first_render.clone();
+        use_effect(move || {
+            if !*first_render {
+                return;
+            }
+            first_render.set(false);
+            let width = window().inner_width().unwrap().as_f64();
+            let height = window().inner_height().unwrap().as_f64();
+            mobile.set(height > width);
+        })
+    }
 
     let menu_open = use_state(|| false);
     let toggle_menu_open = {
@@ -23,14 +33,14 @@ pub fn DefaultLayout() -> Html {
 
     html! {
         <div class={Style::new(include_str!("default_layout.css")).expect("Unwrapping CSS should work!")}>
-            <div id="left">
+            <div id="left" class={if *mobile {"mobile"} else {""}}>
                 <Nav
                     mobile={*mobile}
                     open={*menu_open}
                     toggle_open={toggle_menu_open.clone()}
                 />
             </div>
-            <div id="right">
+            <div id="right" class={if *mobile {"mobile"} else {""}}>
                 <div id="top">
                     <TopBar
                         mobile={*mobile}
