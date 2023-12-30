@@ -1,25 +1,32 @@
 use stylist::Style;
 use yew::prelude::*;
 
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub mobile: bool,
+    pub open: bool,
+    pub toggle_open: Callback<()>,
+}
+
 #[function_component]
-pub fn Nav() -> Html {
-    let mobile = false;
-    let open = use_state(|| !mobile);
-    let mode = if mobile {
-        if *open {
+pub fn Nav(props: &Props) -> Html {
+    let mode = if props.mobile {
+        if props.open {
             "small-open"
         } else {
             "small-closed"
         }
     } else {
-        if *open {
+        if props.open {
             "wide-open"
         } else {
             "wide-closed"
         }
     };
-    let toggle_open = move |_: MouseEvent| {
-        open.set(!*open);
+
+    let toggle_open = {
+        let toggle_open = props.toggle_open.clone();
+        move |_: MouseEvent| toggle_open.emit(())
     };
 
     html! {
@@ -30,7 +37,7 @@ pub fn Nav() -> Html {
             <ul class={mode}>
                 <li class="menu">
                     <a onclick={toggle_open}>
-                        <span class="material-symbols-outlined icon">{if mobile {"close"} else {"menu"}}</span>
+                        <span class="material-symbols-outlined icon">{if props.mobile {"close"} else {"menu"}}</span>
                         <span class="text"></span>
                     </a>
                 </li>

@@ -1,0 +1,15 @@
+:root {
+  display: flex;
+}
+
+#left {
+  width: fit-content;
+}
+
+#right {
+  flex: 1;
+}
+
+#top {
+  height: fit-content;
+}
