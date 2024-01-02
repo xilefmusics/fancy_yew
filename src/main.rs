@@ -1,6 +1,5 @@
 use fancy_yew::components::{ChartJs, ConfigBuilder, DefaultLayout, NavItemBuilder, Navable};
 
-use stylist::yew::Global;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -100,12 +99,9 @@ impl Navable for Route {
 #[function_component]
 fn App() -> Html {
     html! {
-        <>
-            <Global css={include_str!("main.css")} />
-            <BrowserRouter>
-                <Switch<Route> render={Route::render} />
-            </BrowserRouter>
-        </>
+        <BrowserRouter>
+            <Switch<Route> render={Route::render} />
+        </BrowserRouter>
     }
 }
 

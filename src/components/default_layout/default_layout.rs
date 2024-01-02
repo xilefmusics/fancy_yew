@@ -1,7 +1,7 @@
 use crate::components::{Nav, Navable, TopBar};
 
-use gloo::console::log;
 use gloo::utils::window;
+use stylist::yew::Global;
 use stylist::Style;
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -51,30 +51,33 @@ pub fn DefaultLayout<R: Routable + Navable>(props: &Props<R>) -> Html {
         .collect::<Html>();
 
     html! {
-        <div class={Style::new(include_str!("default_layout.css")).expect("Unwrapping CSS should work!")}>
-            <div id="left" class={if *mobile {"mobile"} else {""}}>
-                <Nav
-                    mobile={*mobile}
-                    open={*menu_open}
-                    toggle_open={toggle_menu_open.clone()}
-                >
-                    {nav_items}
-                </Nav>
-            </div>
-            <div id="right" class={if *mobile {"mobile"} else {""}}>
-                <div id="top">
-                    <TopBar
+        <>
+            <Global css={include_str!("main.css")} />
+            <div class={Style::new(include_str!("default_layout.css")).expect("Unwrapping CSS should work!")}>
+                <div id="left" class={if *mobile {"mobile"} else {""}}>
+                    <Nav
                         mobile={*mobile}
-                        menu_open={*menu_open}
-                        toggle_menu_open={toggle_menu_open}
-                    />
+                        open={*menu_open}
+                        toggle_open={toggle_menu_open.clone()}
+                    >
+                        {nav_items}
+                    </Nav>
                 </div>
-                <div id="center">
-                    {
-                        props.children.clone()
-                    }
+                <div id="right" class={if *mobile {"mobile"} else {""}}>
+                    <div id="top">
+                        <TopBar
+                            mobile={*mobile}
+                            menu_open={*menu_open}
+                            toggle_menu_open={toggle_menu_open}
+                        />
+                    </div>
+                    <div id="center">
+                        {
+                            props.children.clone()
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+            </>
     }
 }
