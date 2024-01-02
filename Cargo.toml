@@ -11,3 +11,4 @@ serde = { version = "1.0.163", features = ["derive"] }
 serde_json = "1.0.108"
 stylist = { version = "0.13.0", features = ["yew_integration", "parser"] }
 web-sys = "0.3.66"
+yew-router = "0.18.0"

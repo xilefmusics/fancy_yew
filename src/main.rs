@@ -1,10 +1,11 @@
-use yew::prelude::*;
-
 use fancy_yew::components::{ChartJs, ConfigBuilder, DefaultLayout};
+
 use stylist::yew::Global;
+use yew::prelude::*;
+use yew_router::prelude::*;
 
 #[function_component]
-fn App() -> Html {
+fn Home() -> Html {
     let chart_config = ConfigBuilder::bar()
         .labels(&vec!["Jan", "Feb", "Mar", "Apr", "Mai", "Jun"])
         .dataset(&vec![1, 6, 3, 4, 2, 5])
@@ -27,11 +28,42 @@ fn App() -> Html {
         .build()
         .unwrap();
     html! {
+        <ChartJs config={chart_config}/>
+    }
+}
+
+#[derive(Clone, Routable, PartialEq)]
+pub enum Route {
+    #[at("/")]
+    Home,
+    #[not_found]
+    #[at("/404")]
+    NotFound,
+}
+
+impl Route {
+    pub fn render(route: Route) -> Html {
+        html! {
+            <DefaultLayout>{
+                match route {
+                    Route::Home => {
+                        html! {<Home/>}
+                    }
+                    Route::NotFound => html! { <h1>{ "404 Not Found" }</h1> },
+                }
+            }</DefaultLayout>
+        }
+    }
+}
+
+#[function_component]
+fn App() -> Html {
+    html! {
         <>
             <Global css={include_str!("main.css")} />
-            <DefaultLayout>
-                <ChartJs config={chart_config}/>
-            </DefaultLayout>
+            <BrowserRouter>
+                <Switch<Route> render={Route::render} />
+            </BrowserRouter>
         </>
     }
 }
