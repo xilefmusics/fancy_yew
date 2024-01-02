@@ -47,21 +47,7 @@ pub enum Route {
     NotFound,
 }
 
-impl Route {
-    pub fn render(route: Route) -> Html {
-        html! {
-            <DefaultLayout<Route> nav_routes={Route::route_items()}>{
-                match route {
-                    Route::Index => html! { <h1>{ "Home" }</h1> },
-                    Route::Home => html! { <h1>{ "Home" }</h1> },
-                    Route::Contact => html! { <h1>{ "Contact" }</h1> },
-                    Route::Chart => html! { <Chart /> },
-                    Route::NotFound => html! { <h1>{ "404 Not Found" }</h1> },
-        }}
-            </DefaultLayout<Route>>
-        }
-    }
-}
+impl Route {}
 
 impl Navable for Route {
     fn route_items() -> Vec<Self> {
@@ -93,6 +79,20 @@ impl Navable for Route {
                     navigator.push(&Route::Chart)
                 })),
             _ => NavItemBuilder::new(),
+        }
+    }
+
+    fn render(route: Route) -> Html {
+        html! {
+            <DefaultLayout<Route> nav_routes={Route::route_items()}>{
+                match route {
+                    Route::Index => html! { <h1>{ "Home" }</h1> },
+                    Route::Home => html! { <h1>{ "Home" }</h1> },
+                    Route::Contact => html! { <h1>{ "Contact" }</h1> },
+                    Route::Chart => html! { <Chart /> },
+                    Route::NotFound => html! { <h1>{ "404 Not Found" }</h1> },
+        }}
+            </DefaultLayout<Route>>
         }
     }
 }
