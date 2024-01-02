@@ -39,29 +39,29 @@ ul li.menu {
   margin: 1.2rem 0.8rem 2.4rem 0.8rem;
 }
 
-ul li a span {
+ul li span {
   vertical-align: middle;
 }
 
-ul li:hover a span {
+ul li:hover span {
   color: var(--primary);
 }
 
-ul li.selected a span {
+ul li.selected span {
   color: var(--primary);
 }
 
-ul li a span.icon {
+ul li span.icon {
   font-size: 2.4rem;
 }
 
-ul li a span.text {
+ul li span.text {
   margin-left: 1rem;
   font-size: 1.2rem;
   font-weight: 800;
 }
 
-ul.wide-closed li a span.text {
+ul.wide-closed li span.text {
   display: none;
 }
 

@@ -3,6 +3,7 @@ use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
+    pub children: Html,
     pub mobile: bool,
     pub open: bool,
     pub toggle_open: Callback<()>,
@@ -41,42 +42,7 @@ pub fn Nav(props: &Props) -> Html {
                         <span class="text"></span>
                     </a>
                 </li>
-                <li>
-                    <a>
-                        <span class="material-symbols-outlined icon">{"menu_book"}</span>
-                        <span class="text">{"Dashboard"}</span>
-                    </a>
-                </li>
-                <li class="selected">
-                    <a>
-                        <span class="material-symbols-outlined icon">{"menu_book"}</span>
-                        <span class="text">{"Transactions"}</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="material-symbols-outlined icon">{"menu_book"}</span>
-                        <span class="text">{"Pods"}</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="material-symbols-outlined icon">{"menu_book"}</span>
-                        <span class="text">{"Budgets"}</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="material-symbols-outlined icon">{"menu_book"}</span>
-                        <span class="text">{"Debts"}</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="material-symbols-outlined icon">{"menu_book"}</span>
-                        <span class="text">{"Contracts"}</span>
-                    </a>
-                </li>
+                {props.children.clone()}
             </ul>
         </div>
     }

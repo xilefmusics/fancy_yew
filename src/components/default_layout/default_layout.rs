@@ -1,16 +1,19 @@
-use crate::components::{Nav, TopBar};
+use crate::components::{Nav, Navable, TopBar};
 
+use gloo::console::log;
 use gloo::utils::window;
 use stylist::Style;
 use yew::prelude::*;
+use yew_router::prelude::*;
 
 #[derive(Properties, PartialEq)]
-pub struct Props {
+pub struct Props<R: Routable + Navable> {
     pub children: Html,
+    pub nav_routes: Vec<R>,
 }
 
 #[function_component]
-pub fn DefaultLayout(props: &Props) -> Html {
+pub fn DefaultLayout<R: Routable + Navable>(props: &Props<R>) -> Html {
     let mobile = use_state(|| true);
     let first_render = use_state(|| true);
     {
@@ -34,6 +37,18 @@ pub fn DefaultLayout(props: &Props) -> Html {
             menu_open.set(!*menu_open);
         })
     };
+    let navigator = use_navigator().unwrap();
+    let location = use_location().unwrap();
+    let nav_items = props
+        .nav_routes
+        .iter()
+        .map(|route| {
+            route
+                .clone()
+                .to_nav_item()
+                .build(&navigator, location.path())
+        })
+        .collect::<Html>();
 
     html! {
         <div class={Style::new(include_str!("default_layout.css")).expect("Unwrapping CSS should work!")}>
@@ -42,7 +57,9 @@ pub fn DefaultLayout(props: &Props) -> Html {
                     mobile={*mobile}
                     open={*menu_open}
                     toggle_open={toggle_menu_open.clone()}
-                />
+                >
+                    {nav_items}
+                </Nav>
             </div>
             <div id="right" class={if *mobile {"mobile"} else {""}}>
                 <div id="top">

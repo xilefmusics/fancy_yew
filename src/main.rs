@@ -1,11 +1,11 @@
-use fancy_yew::components::{ChartJs, ConfigBuilder, DefaultLayout};
+use fancy_yew::components::{ChartJs, ConfigBuilder, DefaultLayout, NavItemBuilder, Navable};
 
 use stylist::yew::Global;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
 #[function_component]
-fn Home() -> Html {
+fn Chart() -> Html {
     let chart_config = ConfigBuilder::bar()
         .labels(&vec!["Jan", "Feb", "Mar", "Apr", "Mai", "Jun"])
         .dataset(&vec![1, 6, 3, 4, 2, 5])
@@ -35,7 +35,13 @@ fn Home() -> Html {
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
+    Index,
+    #[at("/home")]
     Home,
+    #[at("/contact")]
+    Contact,
+    #[at("/chart")]
+    Chart,
     #[not_found]
     #[at("/404")]
     NotFound,
@@ -44,14 +50,49 @@ pub enum Route {
 impl Route {
     pub fn render(route: Route) -> Html {
         html! {
-            <DefaultLayout>{
+            <DefaultLayout<Route> nav_routes={Route::route_items()}>{
                 match route {
-                    Route::Home => {
-                        html! {<Home/>}
-                    }
+                    Route::Index => html! { <h1>{ "Home" }</h1> },
+                    Route::Home => html! { <h1>{ "Home" }</h1> },
+                    Route::Contact => html! { <h1>{ "Contact" }</h1> },
+                    Route::Chart => html! { <Chart /> },
                     Route::NotFound => html! { <h1>{ "404 Not Found" }</h1> },
-                }
-            }</DefaultLayout>
+        }}
+            </DefaultLayout<Route>>
+        }
+    }
+}
+
+impl Navable for Route {
+    fn route_items() -> Vec<Self> {
+        vec![Route::Home, Route::Contact, Route::Chart]
+    }
+
+    fn to_nav_item(self) -> NavItemBuilder<'static> {
+        match self {
+            Route::Home => NavItemBuilder::new()
+                .path("/home")
+                .icon("home")
+                .text("Home")
+                .callback(Callback::from(|navigator: Navigator| {
+                    navigator.push(&Route::Home)
+                }))
+                .index(),
+            Route::Contact => NavItemBuilder::new()
+                .path("/contact")
+                .icon("contact_page")
+                .text("Contact")
+                .callback(Callback::from(|navigator: Navigator| {
+                    navigator.push(&Route::Contact)
+                })),
+            Route::Chart => NavItemBuilder::new()
+                .path("/chart")
+                .icon("bar_chart")
+                .text("Chart")
+                .callback(Callback::from(|navigator: Navigator| {
+                    navigator.push(&Route::Chart)
+                })),
+            _ => NavItemBuilder::new(),
         }
     }
 }
