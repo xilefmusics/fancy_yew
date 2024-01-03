@@ -14,11 +14,11 @@ struct Dataset<'a> {
     border_width: Option<usize>,
     #[serde(skip_serializing_if = "Option::is_none", rename = "backgroundColor")]
     background_color: Option<String>,
-    data: &'a [i64],
+    data: &'a [f64],
 }
 
 impl<'a> Dataset<'a> {
-    fn new(data: &'a [i64]) -> Self {
+    fn new(data: &'a [f64]) -> Self {
         Self {
             label: None,
             stack: None,
@@ -91,7 +91,7 @@ impl<'a> ConfigBuilder<'a> {
         self
     }
 
-    pub fn dataset(mut self, data: &'a [i64]) -> Self {
+    pub fn dataset(mut self, data: &'a [f64]) -> Self {
         self.config.data.datasets.push(Dataset::new(data));
         self
     }
