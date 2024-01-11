@@ -11,6 +11,7 @@ pub struct Props {
 pub struct ChartJs {
     pub chart: Chart,
     pub draw_timer: Timeout,
+    pub chart_name: String,
 }
 
 impl Component for ChartJs {
@@ -22,17 +23,18 @@ impl Component for ChartJs {
             Timeout::new(10, move || link.send_message(()))
         };
         Self {
+            chart_name: format!("chart-{}", crate::generate_random_string(10)),
             chart: Chart::new(),
             draw_timer: stand_alone_timer,
         }
     }
     fn update(&mut self, ctx: &Context<Self>, _msg: Self::Message) -> bool {
-        self.chart.draw("chart", &ctx.props().config);
+        self.chart.draw(&self.chart_name, &ctx.props().config);
         true
     }
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
-            <canvas id="chart"></canvas>
+            <canvas id={self.chart_name.clone()}></canvas>
         }
     }
 }

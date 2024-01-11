@@ -19,7 +19,7 @@ fn Chart() -> Html {
         .dataset_border_color_rgba(0, 0, 255, 0.5)
         .dataset_border_width(1)
         .dataset_background_color_rgba(0, 0, 255, 0.2)
-        .dataset(&vec![3., 4., 2., 5., 1., 6.])
+        .dataset(&vec![3., 4., 2., 5., 1., 6.7])
         .dataset_label("Third Data")
         .dataset_border_color_rgba(255, 0, 0, 0.45)
         .dataset_border_width(1)

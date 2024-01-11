@@ -1,5 +1,6 @@
 mod chart_js;
 mod default_layout;
+pub mod input;
 mod nav;
 mod top_bar;
 

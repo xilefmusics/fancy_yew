@@ -27,3 +27,23 @@ div {
   height: 100%;
   width: 100%;
 }
+
+input, select {
+	background-color: var(--fg1);
+	color: var(--bg2);
+  padding: 0.4rem;
+}
+
+button {
+  background-color: var(--primary);
+  padding: 0.4rem;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #cc0000;
+}
+
+select {
+  width: 100%;
+}

@@ -117,6 +117,13 @@ impl<'a> ConfigBuilder<'a> {
         self
     }
 
+    pub fn dataset_border_color_str(mut self, color: &str) -> Self {
+        if let Some(dataset) = self.config.data.datasets.last_mut() {
+            (*dataset).border_color = Some(color.into());
+        }
+        self
+    }
+
     pub fn dataset_border_width(mut self, width: usize) -> Self {
         if let Some(dataset) = self.config.data.datasets.last_mut() {
             (*dataset).border_width = Some(width);
@@ -127,6 +134,13 @@ impl<'a> ConfigBuilder<'a> {
     pub fn dataset_background_color_rgba(mut self, r: u8, g: u8, b: u8, a: f64) -> Self {
         if let Some(dataset) = self.config.data.datasets.last_mut() {
             (*dataset).background_color = Some(format!("rgba({},{},{},{})", r, g, b, a));
+        }
+        self
+    }
+
+    pub fn dataset_background_color_str(mut self, color: &str) -> Self {
+        if let Some(dataset) = self.config.data.datasets.last_mut() {
+            (*dataset).background_color = Some(color.into());
         }
         self
     }

@@ -26,3 +26,8 @@
 #top {
   height: fit-content;
 }
+
+#center {
+  height: 90dvh;
+  overflow: auto;
+}
