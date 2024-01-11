@@ -1,4 +1,4 @@
-use stylist::Style;
+use super::StringInput;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -8,19 +8,22 @@ pub struct Props {
 
 #[function_component]
 pub fn BoolInput(props: &Props) -> Html {
-    let oninput = {
-        let bind_handle = props.bind_handle.clone();
-        move |_: InputEvent| bind_handle.set(!*bind_handle)
+    let value = if *props.bind_handle {
+        "True".into()
+    } else {
+        "False".into()
     };
-
+    let value = use_state(|| value);
+    let callback = {
+        let handle = props.bind_handle.clone();
+        Callback::from(move |value: String| handle.set(value == "True"))
+    };
     html! {
-        <label class={Style::new(include_str!("bool_input.css")).expect("Unwrapping CSS should work!")}>
-            <input
-                checked={*props.bind_handle}
-                oninput={oninput}
-                type="checkbox"
+        <StringInput
+            bind_handle={value}
+            options={vec!["True".into(), "False".into()]}
+            strict=true
+            callback={callback}
             />
-            <span class="checkmark"></span>
-        </label>
     }
 }

@@ -8,22 +8,32 @@ pub struct Props {
     pub options: Vec<String>,
     #[prop_or_default]
     pub strict: bool,
+    #[prop_or_default]
+    pub callback: Option<Callback<String>>,
 }
 
 #[function_component]
 pub fn StringInput(props: &Props) -> Html {
     let oninput = {
         let bind_handle = props.bind_handle.clone();
+        let callback = props.callback.clone();
         move |e: InputEvent| {
             let input: HtmlInputElement = e.target_unchecked_into();
-            bind_handle.set(input.value())
+            bind_handle.set(input.value());
+            if let Some(callback) = callback.clone() {
+                callback.emit(input.value());
+            }
         }
     };
     let onchange = {
         let bind_handle = props.bind_handle.clone();
+        let callback = props.callback.clone();
         move |e: Event| {
             let input: HtmlInputElement = e.target_unchecked_into();
-            bind_handle.set(input.value())
+            bind_handle.set(input.value());
+            if let Some(callback) = callback.clone() {
+                callback.emit(input.value());
+            }
         }
     };
     let value = (*props.bind_handle).clone();
