@@ -4,12 +4,13 @@ use serde::Serialize;
 use std::ops::Deref;
 use yew::{Callback, UseStateHandle};
 
-pub struct Resource<T> {
+#[derive(PartialEq)]
+pub struct Resource<T: PartialEq> {
     endpoint: String,
     data: Vec<T>,
 }
 
-impl<T> Deref for Resource<T> {
+impl<T: PartialEq> Deref for Resource<T> {
     type Target = Vec<T>;
 
     fn deref(&self) -> &Self::Target {
@@ -17,7 +18,7 @@ impl<T> Deref for Resource<T> {
     }
 }
 
-impl<T: Serialize + DeserializeOwned + Default + 'static + Clone> Resource<T> {
+impl<T: Serialize + DeserializeOwned + Default + 'static + Clone + PartialEq> Resource<T> {
     pub fn new(endpoint: String, data: Vec<T>) -> Self {
         Self { endpoint, data }
     }

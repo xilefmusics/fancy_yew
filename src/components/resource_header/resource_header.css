@@ -1,0 +1,14 @@
+:root {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  background-color: var(--bg1);
+}
+
+button:hover {
+  background-color: var(--fg1);
+  color: var(--bg1);
+}
+
