@@ -1,4 +1,5 @@
 pub mod components;
+pub mod rest;
 
 use rand::distributions::Alphanumeric;
 use rand::Rng;

@@ -1,4 +1,7 @@
-use fancy_yew::components::{ChartJs, ConfigBuilder, DefaultLayout, NavItemBuilder, Navable};
+use fancy_yew::components::{
+    input::StringNumberMap, ChartJs, ConfigBuilder, DefaultLayout, NavItemBuilder, Navable,
+};
+use std::collections::HashMap;
 
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -28,6 +31,23 @@ fn Chart() -> Html {
         .unwrap();
     html! {
         <ChartJs config={chart_config}/>
+    }
+}
+
+#[function_component]
+fn Home() -> Html {
+    let mut map: HashMap<String, f64> = HashMap::new();
+    map.insert("test".into(), 1999.);
+    let bind_handle = use_state(|| map);
+    html! {
+        <div style="width: 30vw;">
+            <StringNumberMap
+                bind_handle={bind_handle}
+                min=0.
+                max=10000.
+                options={vec!{"A".into(), "B".into()}}
+                />
+        </div>
     }
 }
 
@@ -86,7 +106,7 @@ impl Navable for Route {
             <DefaultLayout<Route> nav_routes={Route::route_items()}>{
                 match route {
                     Route::Index => html! { <h1>{ "Home" }</h1> },
-                    Route::Home => html! { <h1>{ "Home" }</h1> },
+                    Route::Home => html! { <Home />},
                     Route::Contact => html! { <h1>{ "Contact" }</h1> },
                     Route::Chart => html! { <Chart /> },
                     Route::NotFound => html! { <h1>{ "404 Not Found" }</h1> },
