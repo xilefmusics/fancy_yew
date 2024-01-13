@@ -1,0 +1,28 @@
+:root {
+    width: 100%;
+}
+
+.list-item {
+    padding: 0.4rem;
+}
+
+button {
+    background-color: rgba(0,0,0,0.0);
+}
+
+button:hover {
+    background-color: var(--fg1);
+}
+
+button:hover span {
+    color: var(--bg1);
+}
+
+
+td {
+    width: 90%;
+}
+
+input {
+    width: 100%;
+}

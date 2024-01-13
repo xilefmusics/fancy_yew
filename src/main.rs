@@ -1,5 +1,6 @@
 use fancy_yew::components::{
-    input::StringNumberMap, ChartJs, ConfigBuilder, DefaultLayout, NavItemBuilder, Navable,
+    input::RemoteFileInput, input::StringNumberMap, ChartJs, ConfigBuilder, DefaultLayout,
+    NavItemBuilder, Navable,
 };
 use std::collections::HashMap;
 
@@ -39,6 +40,7 @@ fn Home() -> Html {
     let mut map: HashMap<String, f64> = HashMap::new();
     map.insert("test".into(), 1999.);
     let bind_handle = use_state(|| map);
+    let bind_handle2 = use_state(|| vec!["file1.txt".into(), "file2.txt".into()]);
     html! {
         <div style="width: 30vw;">
             <StringNumberMap
@@ -47,6 +49,7 @@ fn Home() -> Html {
                 max=10000.
                 options={vec!{"A".into(), "B".into()}}
                 />
+            <RemoteFileInput bind_handle={bind_handle2}/>
         </div>
     }
 }
