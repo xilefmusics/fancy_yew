@@ -49,7 +49,10 @@ fn Home() -> Html {
                 max=10000.
                 options={vec!{"A".into(), "B".into()}}
                 />
-            <RemoteFileInput bind_handle={bind_handle2}/>
+            <RemoteFileInput<String>
+                bind_handle={bind_handle2}
+                endpoint="/api/blobs"
+            />
         </div>
     }
 }

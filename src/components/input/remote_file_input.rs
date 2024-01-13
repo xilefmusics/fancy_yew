@@ -1,26 +1,39 @@
 use super::FileInput;
+use crate::rest::FileUploader;
 use gloo::file::File;
+use serde::de::DeserializeOwned;
+use std::fmt::Display;
 use stylist::Style;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub bind_handle: UseStateHandle<Vec<String>>,
+    pub endpoint: String,
 }
 
 #[function_component]
-pub fn RemoteFileInput(props: &Props) -> Html {
+pub fn RemoteFileInput<T: DeserializeOwned + Display>(props: &Props) -> Html {
     let files_handle = use_state(|| Vec::new());
     let bind_handle = props.bind_handle.clone();
 
     let add_callback = {
         let list_handle = bind_handle.clone();
+        let endpoint = props.endpoint.clone();
         Callback::from(move |files: Vec<File>| {
-            let mut list = (*list_handle).clone();
-            for file in files {
-                list.push(file.name());
-            }
-            list_handle.set(list);
+            let list_handle = list_handle.clone();
+            let endpoint = endpoint.clone();
+            wasm_bindgen_futures::spawn_local(async move {
+                let mut list = (*list_handle).clone();
+                for file in files {
+                    list.push(
+                        FileUploader::upload::<T>(&endpoint, &file)
+                            .await
+                            .to_string(),
+                    );
+                }
+                list_handle.set(list);
+            });
         })
     };
 
