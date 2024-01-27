@@ -17,6 +17,10 @@ pub fn ResourceHeader<T: PartialEq + 'static + DeserializeOwned + Serialize + Cl
         <div class={Style::new(include_str!("resource_header.css")).expect("Unwrapping CSS should work!")}>
                 <button
                     class="material-symbols-outlined icon"
+                    onclick={Resource::export_closure::<MouseEvent>(handle.clone())}
+                >{"download"}</button>
+                <button
+                    class="material-symbols-outlined icon"
                     onclick={Resource::add_default_closure::<MouseEvent>(handle.clone())}
                 >{"add"}</button>
         </div>
