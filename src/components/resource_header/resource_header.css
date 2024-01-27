@@ -12,3 +12,7 @@ button:hover {
   color: var(--bg1);
 }
 
+.hidden {
+  visibility: hidden;
+}
+

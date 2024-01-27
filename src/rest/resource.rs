@@ -1,3 +1,4 @@
+use gloo::file::File;
 use gloo::net::http::Request;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
@@ -110,6 +111,32 @@ impl<T: Serialize + DeserializeOwned + Default + 'static + Clone + PartialEq> Re
 
     pub fn export_callback<I: 'static>(handle: UseStateHandle<Resource<T>>) -> Callback<I> {
         Callback::from(Self::export_closure(handle))
+    }
+
+    pub async fn import_async(&self, file: &File) -> Resource<T> {
+        let bytes = gloo::file::futures::read_as_bytes(file).await.unwrap();
+        let data = serde_json::from_slice::<Vec<T>>(&bytes).unwrap();
+        Request::post(&self.endpoint)
+            .json(&data)
+            .unwrap()
+            .send()
+            .await
+            .unwrap();
+        self.reload_async().await
+    }
+
+    pub fn import(handle: UseStateHandle<Resource<T>>, file: Vec<File>) {
+        wasm_bindgen_futures::spawn_local(async move {
+            handle.set(handle.import_async(file.get(0).unwrap()).await)
+        });
+    }
+
+    pub fn import_closure(handle: UseStateHandle<Resource<T>>) -> impl Fn(Vec<File>) {
+        move |file: Vec<File>| Self::import(handle.clone(), file)
+    }
+
+    pub fn import_callback(handle: UseStateHandle<Resource<T>>) -> Callback<Vec<File>> {
+        Callback::from(Self::import_closure(handle))
     }
 
     pub async fn delete_async(&self, r: T) -> Self {
