@@ -1,4 +1,4 @@
-# Fancy New
+# Fancy Yew
 
 The `fancy_yew` library contains yew components and layouts.
 It is designed to build the frame of a PWA (Progressive Web App).
