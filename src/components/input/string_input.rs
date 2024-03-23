@@ -39,8 +39,15 @@ pub fn StringInput(props: &Props) -> Html {
     let value = (*props.bind_handle).clone();
 
     if props.options.len() > 0 {
-        let options = props
+        let mut options = props
             .options
+            .iter()
+            .cloned()
+            .filter(|s| *s != value)
+            .collect::<Vec<String>>();
+
+        options.push(value.clone());
+        let options = options
             .iter()
             .map(|option| html! {<option value={option.clone()}>{option.clone()}</option>})
             .collect::<Html>();
