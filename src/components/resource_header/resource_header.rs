@@ -8,6 +8,8 @@ use yew::prelude::*;
 #[derive(Properties, PartialEq)]
 pub struct Props<T: PartialEq + DeserializeOwned + Serialize + Clone + Default> {
     pub handle: UseStateHandle<Resource<T>>,
+    #[prop_or_default]
+    pub children: Html,
 }
 
 #[function_component]
@@ -34,12 +36,21 @@ pub fn ResourceHeader<T: PartialEq + 'static + DeserializeOwned + Serialize + Cl
 
     html! {
         <div class={Style::new(include_str!("resource_header.css")).expect("Unwrapping CSS should work!")}>
-            <span class={if !*files_handle_visible {"hidden"} else {""}}>
-                <FileInput
-                    bind_handle={files_handle}
-                    callback={onimport}
-                />
-            </span>
+            {
+                if *files_handle_visible {
+                    html!{
+                        <FileInput
+                            bind_handle={files_handle}
+                            callback={onimport}
+                        />
+                    }
+                } else {
+                    html!()
+                }
+            }
+            {
+                props.children.clone()
+            }
             <button
                 class="material-symbols-outlined icon"
                 onclick={Resource::export_closure::<MouseEvent>(handle.clone())}
