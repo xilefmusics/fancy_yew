@@ -87,11 +87,10 @@ impl<T: Serialize + DeserializeOwned + Default + 'static + Clone + PartialEq> Re
         let array = js_sys::Array::new();
         array.push(&JsValue::from_str(&data));
 
-        let blob = Blob::new_with_u8_array_sequence_and_options(
-            &array,
-            web_sys::BlobPropertyBag::new().type_("text/json"),
-        )
-        .unwrap();
+        let property_bag = web_sys::BlobPropertyBag::new();
+        property_bag.set_type("text/json");
+
+        let blob = Blob::new_with_u8_array_sequence_and_options(&array, &property_bag).unwrap();
         let url = Url::create_object_url_with_blob(&blob).unwrap();
         let document = window().unwrap().document().unwrap();
         let anchor = document

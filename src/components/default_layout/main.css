@@ -13,9 +13,9 @@
 	box-sizing: border-box;
 	color: var(--fg1);
   border: 0;
-  overflow: hidden; 
+  /* overflow: hidden; */
   overscroll-behavior: none; 
-  font-family: 'Ubuntu', sans-serif; 
+  font-family: "Rubik", sans-serif;
 }
 
 html,body{
