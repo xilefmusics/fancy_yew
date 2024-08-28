@@ -1,5 +1,5 @@
 use fancy_yew::components::{
-    input::RemoteFileInput, input::StringNumberMap, ChartJs, ConfigBuilder, DefaultLayout,
+    input::RemoteFileInput, input::StringNumberMap, Chart as ChartJs, ConfigBuilder, DefaultLayout,
     Editor as EditorComponent, NavItemBuilder, Navable, SyntaxParser,
 };
 use std::collections::HashMap;

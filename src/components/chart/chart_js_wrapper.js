@@ -1,4 +1,4 @@
-export class MyChart {
+export class ChartJsWrapper {
     draw(element_id, config) {
         if (this.chart) {
             this.chart.destroy();
