@@ -86,6 +86,10 @@ main.mobile#horizontal-layout {
   left: 0;
 }
 
+main.fullscreen#horizontal-layout {
+  margin: 0;
+}
+
 aside#horizontal-layout {
   height: 100%;
   width: 16rem;

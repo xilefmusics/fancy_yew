@@ -11,6 +11,13 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 #[function_component]
+fn FullScreen() -> Html {
+    html! {
+        <h1>{"FullScreen"}</h1>
+    }
+}
+
+#[function_component]
 fn Editor() -> Html {
     let content = r#"{title: Du hast einen Plan}
 {artist: Felix Rollbühler}
@@ -148,6 +155,8 @@ pub enum Route {
     Chart,
     #[at("/editor")]
     Editor,
+    #[at("/fullscreen")]
+    FullScreen,
     #[not_found]
     #[at("/404")]
     NotFound,
@@ -155,7 +164,7 @@ pub enum Route {
 
 impl Navable for Route {
     fn route_items() -> Vec<Self> {
-        vec![Route::Home, Route::Chart, Route::Editor]
+        vec![Route::Home, Route::Chart, Route::Editor, Route::FullScreen]
     }
 
     fn to_nav_item(self) -> NavItemBuilder<'static> {
@@ -189,6 +198,13 @@ impl Navable for Route {
                 .callback(Callback::from(|navigator: Navigator| {
                     navigator.push(&Route::Editor)
                 })),
+            Route::FullScreen => NavItemBuilder::new()
+                .path("/fullscreen")
+                .icon("fullscreen")
+                .text("FullScreen")
+                .callback(Callback::from(|navigator: Navigator| {
+                    navigator.push(&Route::FullScreen)
+                })),
             _ => NavItemBuilder::new(),
         }
     }
@@ -198,12 +214,17 @@ impl Navable for Route {
             <Layout<Route>
                 nav_routes={Route::route_items()}
                 account_route={Route::Account}
+                fullscreen={match route {
+                    Route::FullScreen => true,
+                    _ => false,
+                }}
             >{
                 match route {
                     Route::Index => html! { <Home /> },
                     Route::Home => html! { <Home /> },
                     Route::Chart => html! { <Chart /> },
                     Route::Editor => html! { <Editor /> },
+                    Route::FullScreen => html! { <FullScreen /> },
                     Route::Account => html! { <h1>{"Account"}</h1> },
                     Route::NotFound => html! { <h1>{ "404 Not Found" }</h1> },
         }}

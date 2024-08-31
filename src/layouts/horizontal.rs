@@ -11,6 +11,8 @@ pub struct Props<R: Routable + Navable> {
     pub nav_routes: Vec<R>,
     #[prop_or_default]
     pub account_route: Option<R>,
+    #[prop_or_default]
+    pub fullscreen: bool,
 }
 
 #[function_component(HorizontalLayout)]
@@ -51,38 +53,44 @@ pub fn horizontal_layout<R: Routable + Navable>(props: &Props<R>) -> Html {
     html! {
         <>
             <Global css={include_str!("horizontal.css")} />
-            <header id="horizontal-layout" class={if mobile {"mobile"} else {""}}>
-                <li><span
-                    class="material-symbols-outlined icon"
-                    onclick={toggle_closed.clone()}
-                >
-                    {"menu"}
-                </span></li>
-                <div class="header-main"></div>
-                {
-                    account_route
-                }
-            </header>
-            <aside id="horizontal-layout" class={
-                if *closed && mobile {"closed mobile"}
-                else if *closed {"closed"}
-                else if mobile {"mobile"} else {""}
+            if !props.fullscreen {
+                <header id="horizontal-layout" class={if mobile {"mobile"} else {""}}>
+                    <li><span
+                        class="material-symbols-outlined icon"
+                        onclick={toggle_closed.clone()}
+                    >
+                        {"menu"}
+                    </span></li>
+                    <div class="header-main"></div>
+                    {
+                        account_route
+                    }
+                </header>
+                <aside id="horizontal-layout" class={
+                    if *closed && mobile {"closed mobile"}
+                    else if *closed {"closed"}
+                    else if mobile {"mobile"} else {""}
+                }>
+                    <nav id="horizontal-layout">
+                        <ul>
+                            <li class="close"><span
+                                class="material-symbols-outlined icon"
+                                onclick={toggle_closed}
+                            >
+                                {"close"}
+                            </span></li>
+                            {
+                                nav_items
+                            }
+                        </ul>
+                    </nav>
+                </aside>
+            }
+            <main id="horizontal-layout" class={
+                if mobile {"mobile"}
+                else if props.fullscreen {"fullscreen"}
+                else {""}
             }>
-                <nav id="horizontal-layout">
-                    <ul>
-                        <li class="close"><span
-                            class="material-symbols-outlined icon"
-                            onclick={toggle_closed}
-                        >
-                            {"close"}
-                        </span></li>
-                        {
-                            nav_items
-                        }
-                    </ul>
-                </nav>
-            </aside>
-            <main id="horizontal-layout" class={if mobile {"mobile"} else {""}}>
                 {
                     props.children.clone()
                 }
