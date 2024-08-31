@@ -12,8 +12,8 @@ pub struct Props {
     pub endpoint: String,
 }
 
-#[function_component]
-pub fn RemoteFileInput<T: DeserializeOwned + Display>(props: &Props) -> Html {
+#[function_component(RemoteFileInput)]
+pub fn remote_file_input<T: DeserializeOwned + Display>(props: &Props) -> Html {
     let files_handle = use_state(|| Vec::new());
     let bind_handle = props.bind_handle.clone();
 

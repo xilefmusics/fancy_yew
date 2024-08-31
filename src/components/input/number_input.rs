@@ -10,8 +10,8 @@ pub struct Props {
     pub max: Option<f64>,
 }
 
-#[function_component]
-pub fn NumberInput(props: &Props) -> Html {
+#[function_component(NumberInput)]
+pub fn number_input(props: &Props) -> Html {
     let oninput = {
         let bind_handle = props.bind_handle.clone();
         move |e: InputEvent| {

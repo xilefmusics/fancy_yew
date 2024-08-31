@@ -7,8 +7,8 @@ pub struct Props {
     pub bind_handle: UseStateHandle<DateTime<Local>>,
 }
 
-#[function_component]
-pub fn DateInput(props: &Props) -> Html {
+#[function_component(DateInput)]
+pub fn date_input(props: &Props) -> Html {
     let oninput = {
         let bind_handle = props.bind_handle.clone();
         move |e: InputEvent| {

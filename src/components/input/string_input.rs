@@ -12,8 +12,8 @@ pub struct Props {
     pub callback: Option<Callback<String>>,
 }
 
-#[function_component]
-pub fn StringInput(props: &Props) -> Html {
+#[function_component(StringInput)]
+pub fn string_input(props: &Props) -> Html {
     let oninput = {
         let bind_handle = props.bind_handle.clone();
         let callback = props.callback.clone();

@@ -6,8 +6,8 @@ pub struct Props {
     pub bind_handle: UseStateHandle<bool>,
 }
 
-#[function_component]
-pub fn BoolInput(props: &Props) -> Html {
+#[function_component(BoolInput)]
+pub fn bool_input(props: &Props) -> Html {
     let value = if *props.bind_handle {
         "True".into()
     } else {

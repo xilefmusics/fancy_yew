@@ -9,8 +9,8 @@ pub struct Props {
     pub callback: Option<Callback<Vec<File>>>,
 }
 
-#[function_component]
-pub fn FileInput(props: &Props) -> Html {
+#[function_component(FileInput)]
+pub fn file_input(props: &Props) -> Html {
     let onchange = {
         let bind_handle = props.bind_handle.clone();
         let callback = props.callback.clone();

@@ -12,8 +12,8 @@ pub struct Props {
     pub strict: bool,
 }
 
-#[function_component]
-pub fn StringStringMap(props: &Props) -> Html {
+#[function_component(StringStringMap)]
+pub fn string_string_map(props: &Props) -> Html {
     let next_key = use_state(|| String::new());
     let next_value = use_state(|| String::new());
     let bind_handle = props.bind_handle.clone();

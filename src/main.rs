@@ -10,15 +10,15 @@ use gloo::console::log;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-#[function_component]
-fn FullScreen() -> Html {
+#[function_component(FullScreen)]
+fn full_screen() -> Html {
     html! {
         <h1>{"FullScreen"}</h1>
     }
 }
 
-#[function_component]
-fn Editor() -> Html {
+#[function_component(Editor)]
+fn editor() -> Html {
     let content = r#"{title: Du hast einen Plan}
 {artist: Felix Rollbühler}
 {key: D}
@@ -93,8 +93,8 @@ ver[Em]trauen Herr, auf deinen [A]Plan. (2x)"#
     }
 }
 
-#[function_component]
-fn Chart() -> Html {
+#[function_component(Chart)]
+fn chart() -> Html {
     let chart_config = ConfigBuilder::bar()
         .labels(&vec!["Jan", "Feb", "Mar", "Apr", "Mai", "Jun"])
         .dataset(&vec![1., 6., 3., 4., 2., 5.])
@@ -121,8 +121,8 @@ fn Chart() -> Html {
     }
 }
 
-#[function_component]
-fn Home() -> Html {
+#[function_component(Home)]
+fn home() -> Html {
     let mut map: HashMap<String, f64> = HashMap::new();
     map.insert("test".into(), 1999.);
     let bind_handle = use_state(|| map);
@@ -233,8 +233,8 @@ impl Navable for Route {
     }
 }
 
-#[function_component]
-fn App() -> Html {
+#[function_component(App)]
+fn app() -> Html {
     html! {
         <BrowserRouter>
             <Switch<Route> render={Route::render} />

@@ -16,8 +16,8 @@ pub struct Props {
     pub strict: bool,
 }
 
-#[function_component]
-pub fn StringNumberMap(props: &Props) -> Html {
+#[function_component(StringNumberMap)]
+pub fn string_number_map(props: &Props) -> Html {
     let next_key = use_state(|| String::new());
     let next_value = use_state(|| 0.);
     let next_min = props.min;
