@@ -1,0 +1,119 @@
+:root {
+	--primary: #bb0000;
+	--fg1: rgba(255, 255, 255, 0.7);
+	--fg2: rgba(255, 255, 255, 0.5);
+	--bg1: #1e1e1e;
+	--bg2: #272727;
+	--bg3: #2c2e2e;
+}
+
+* {
+  color: var(--fg1);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--bg1);
+  height: 100dvh;
+  width: 100dwh;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior: none; 
+}
+
+header#vertical-layout {
+  height: 4rem;
+  background-color: var(--bg2);
+  margin: 0.8rem 0.8rem 0 0.8rem;
+  border-radius: 1.6rem;
+  width: calc(100vw - 1.6rem);
+  display: flex; 
+  justify-content: right;
+  align-items: center;
+}
+
+header#vertical-layout li {
+  padding: 0.2rem 0.2rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+  list-style: none;
+}
+
+header#vertical-layout li.selected {
+  background-color: var(--bg3);
+}
+
+header#vertical-layout li .text {
+  display: none; 
+}
+
+header#vertical-layout li .icon {
+  color: var(--fg1);
+  font-size: 2rem;
+  transition: font-size 0.3s ease; 
+}
+
+header#vertical-layout li .icon:hover {
+  color: var(--primary);
+  font-size: 2.6rem;
+}
+
+header#vertical-layout li.selected .icon {
+  color: var(--primary);
+}
+
+main#vertical-layout {
+  flex: 1;
+  background-color: var(--bg1);
+  overflow: scroll;
+}
+
+footer#vertical-layout {
+  height: 4rem;
+  background-color: var(--bg2);
+}
+
+footer#vertical-layout nav {
+  height: 100%;
+}
+
+footer#vertical-layout nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+footer#vertical-layout nav li {
+  margin: 1rem; 
+  padding: 0.2rem 0.8rem;
+  border-radius: 1rem;
+}
+
+footer#vertical-layout nav li.selected {
+  background-color: var(--bg3);
+}
+
+footer#vertical-layout nav li .text {
+  display: none; 
+}
+
+footer#vertical-layout nav li .icon {
+  font-size: 2rem;
+  color: var(--fg1);
+  transition: font-size 0.3s ease; 
+}
+
+footer#vertical-layout nav li:hover .icon {
+  font-size: 2.6rem;
+  color: var(--primary);
+}
+
+footer#vertical-layout nav li.selected .icon {
+  color: var(--primary);
+}

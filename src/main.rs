@@ -1,7 +1,9 @@
 use fancy_yew::components::{
-    input::RemoteFileInput, input::StringNumberMap, Chart as ChartJs, ConfigBuilder, DefaultLayout,
-    Editor as EditorComponent, NavItemBuilder, Navable, SyntaxParser,
+    input::RemoteFileInput, input::StringNumberMap, Chart as ChartJs, ConfigBuilder,
+    Editor as EditorComponent, SyntaxParser,
 };
+use fancy_yew::layouts::{NavItemBuilder, Navable, VerticalLayout as Layout};
+
 use std::collections::HashMap;
 
 use gloo::console::log;
@@ -138,10 +140,10 @@ fn Home() -> Html {
 pub enum Route {
     #[at("/")]
     Index,
+    #[at("/account")]
+    Account,
     #[at("/home")]
     Home,
-    #[at("/contact")]
-    Contact,
     #[at("/chart")]
     Chart,
     #[at("/editor")]
@@ -153,7 +155,7 @@ pub enum Route {
 
 impl Navable for Route {
     fn route_items() -> Vec<Self> {
-        vec![Route::Home, Route::Contact, Route::Chart, Route::Editor]
+        vec![Route::Home, Route::Chart, Route::Editor]
     }
 
     fn to_nav_item(self) -> NavItemBuilder<'static> {
@@ -166,12 +168,12 @@ impl Navable for Route {
                     navigator.push(&Route::Home)
                 }))
                 .index(),
-            Route::Contact => NavItemBuilder::new()
-                .path("/contact")
-                .icon("contact_page")
-                .text("Contact")
+            Route::Account => NavItemBuilder::new()
+                .path("/account")
+                .icon("account_circle")
+                .text("Account")
                 .callback(Callback::from(|navigator: Navigator| {
-                    navigator.push(&Route::Contact)
+                    navigator.push(&Route::Account)
                 })),
             Route::Chart => NavItemBuilder::new()
                 .path("/chart")
@@ -193,16 +195,19 @@ impl Navable for Route {
 
     fn render(route: Route) -> Html {
         html! {
-            <DefaultLayout<Route> nav_routes={Route::route_items()}>{
+            <Layout<Route>
+                nav_routes={Route::route_items()}
+                account_route={Route::Account}
+            >{
                 match route {
-                    Route::Index => html! { <h1>{ "Home" }</h1> },
-                    Route::Home => html! { <Home />},
-                    Route::Contact => html! { <h1>{ "Contact" }</h1> },
+                    Route::Index => html! { <Home /> },
+                    Route::Home => html! { <Home /> },
                     Route::Chart => html! { <Chart /> },
                     Route::Editor => html! { <Editor /> },
+                    Route::Account => html! { <h1>{"Account"}</h1> },
                     Route::NotFound => html! { <h1>{ "404 Not Found" }</h1> },
         }}
-            </DefaultLayout<Route>>
+            </Layout<Route>>
         }
     }
 }
