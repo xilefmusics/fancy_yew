@@ -13,7 +13,7 @@ pub struct Props<T: PartialEq + DeserializeOwned + Serialize + Clone + Default> 
 }
 
 #[function_component(ResourceHeader)]
-pub fn resource_header<T: PartialEq + 'static + DeserializeOwned + Serialize + Clone + Default>(
+pub fn resource_heade<T: PartialEq + 'static + DeserializeOwned + Serialize + Clone + Default>(
     props: &Props<T>,
 ) -> Html {
     let handle = props.handle.clone();
