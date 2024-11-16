@@ -10,6 +10,8 @@ pub struct Props {
     pub strict: bool,
     #[prop_or_default]
     pub callback: Option<Callback<String>>,
+    #[prop_or_default]
+    pub placeholder: String,
 }
 
 #[function_component(StringInput)]
@@ -79,6 +81,7 @@ pub fn string_input(props: &Props) -> Html {
                 value={value}
                 oninput={oninput}
                 type="string"
+                placeholder={props.placeholder.clone()}
             />
         }
     }

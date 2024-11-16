@@ -35,9 +35,9 @@ pub fn horizontal_layout<R: Routable + Navable>(props: &Props<R>) -> Html {
         .clone()
         .map(|route| route.to_nav_item().build(&navigator, location.path()))
         .unwrap_or(html! {
-            <span class="material-symbols-outlined account">
+            <li><span class="material-symbols-outlined account icon">
                 {"account_circle"}
-            </span>
+            </span></li>
         });
 
     let closed = use_state(|| true);
