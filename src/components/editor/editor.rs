@@ -217,7 +217,7 @@ impl Component for Editor {
                     {discard}
                     {save}
                 </div>
-                <div class={&self.code_mirror_style_class}>
+                <div class={&self.code_mirror_style_class} style="min-width: 100px;">
                     <textarea id={self.editor_name.clone()}></textarea>
                 </div>
             </div>
