@@ -127,6 +127,26 @@ fn home() -> Html {
     map.insert("test".into(), 1999.);
     let bind_handle = use_state(|| map);
     let bind_handle2 = use_state(|| vec!["file1.txt".into(), "file2.txt".into()]);
+    let on_show_success = {
+        |_: MouseEvent| {
+            fancy_yew::toast_notifications::show_success("This is a success");
+        }
+    };
+    let on_show_error = {
+        |_: MouseEvent| {
+            fancy_yew::toast_notifications::show_error("This is an error");
+        }
+    };
+    let on_show_warning = {
+        |_: MouseEvent| {
+            fancy_yew::toast_notifications::show_warning("This is a warning");
+        }
+    };
+    let on_show_info = {
+        |_: MouseEvent| {
+            fancy_yew::toast_notifications::show_info("This is an info");
+        }
+    };
     html! {
         <div style="width: 30vw;">
             <StringNumberMap
@@ -139,6 +159,10 @@ fn home() -> Html {
                 bind_handle={bind_handle2}
                 endpoint="/api/blobs"
             />
+            <span onclick={on_show_success}>{"Show Success"}</span>
+            <span onclick={on_show_error}>{"Show Error"}</span>
+            <span onclick={on_show_warning}>{"Show Warning"}</span>
+            <span onclick={on_show_info}>{"Show Info"}</span>
         </div>
     }
 }
