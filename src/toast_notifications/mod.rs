@@ -79,18 +79,18 @@ pub fn create_toast(toast_type: &str, icon: &str, title: &str, text: &str) {
     closure.forget();
 }
 
-pub fn show_success(message: &str) {
-    create_toast("success", "check_circle", "Success", message);
+pub fn show_success(title: &str, message: &str) {
+    create_toast("success", "check_circle", title, message);
 }
 
-pub fn show_error(message: &str) {
-    create_toast("error", "bug_report", "Error", message);
+pub fn show_error(title: &str, message: &str) {
+    create_toast("error", "bug_report", title, message);
 }
 
-pub fn show_warning(message: &str) {
-    create_toast("warning", "warning", "Warning", message);
+pub fn show_warning(title: &str, message: &str) {
+    create_toast("warning", "warning", title, message);
 }
 
-pub fn show_info(message: &str) {
-    create_toast("info", "info", "Info", message);
+pub fn show_info(title: &str, message: &str) {
+    create_toast("info", "info", title, message);
 }

@@ -129,22 +129,22 @@ fn home() -> Html {
     let bind_handle2 = use_state(|| vec!["file1.txt".into(), "file2.txt".into()]);
     let on_show_success = {
         |_: MouseEvent| {
-            fancy_yew::toast_notifications::show_success("This is a success");
+            fancy_yew::toast_notifications::show_success("Error", "This is a success");
         }
     };
     let on_show_error = {
         |_: MouseEvent| {
-            fancy_yew::toast_notifications::show_error("This is an error");
+            fancy_yew::toast_notifications::show_error("Error", "This is an error");
         }
     };
     let on_show_warning = {
         |_: MouseEvent| {
-            fancy_yew::toast_notifications::show_warning("This is a warning");
+            fancy_yew::toast_notifications::show_warning("Error", "This is a warning");
         }
     };
     let on_show_info = {
         |_: MouseEvent| {
-            fancy_yew::toast_notifications::show_info("This is an info");
+            fancy_yew::toast_notifications::show_info("Error", "This is an info");
         }
     };
     html! {
