@@ -19,8 +19,12 @@ impl Component for Chart {
     type Properties = Props;
 
     fn create(_ctx: &Context<Self>) -> Self {
+        let uuid = web_sys::window().map(|window| window.crypto().map(|crypto| crypto.random_uuid()).unwrap_or_else(|_| {
+                "crypto-not-supported".to_string()
+            })).unwrap_or_else(|| "crypto-not-supported".to_string());
+
         Self {
-            chart_name: format!("chart-{}", crate::generate_random_string(10)),
+            chart_name: format!("chart-{}", uuid),
             chart: None,
         }
     }

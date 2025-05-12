@@ -69,8 +69,17 @@ impl Component for Editor {
 
         let code_mirror_style_class = style.get_class_name().to_string();
 
+        let uuid = web_sys::window()
+            .map(|window| {
+                window
+                    .crypto()
+                    .map(|crypto| crypto.random_uuid())
+                    .unwrap_or_else(|_| "crypto-not-supported".to_string())
+            })
+            .unwrap_or_else(|| "crypto-not-supported".to_string());
+
         Self {
-            editor_name: format!("editor-{}", crate::generate_random_string(10)),
+            editor_name: format!("editor-{}", uuid),
             code_mirror_wrapper: None,
             onsave,
             onautoformat,

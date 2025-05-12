@@ -60,7 +60,10 @@ pub fn string_input(props: &Props) -> Html {
             </select>
                 }
         } else {
-            let list_id = format!("list-{}", crate::generate_random_string(10));
+            let uuid = web_sys::window().map(|window| window.crypto().map(|crypto| crypto.random_uuid()).unwrap_or_else(|_| {
+                "crypto-not-supported".to_string()
+            })).unwrap_or_else(|| "crypto-not-supported".to_string());
+            let list_id = format!("list-{}", uuid);
             html! {
                 <>
                     <input
