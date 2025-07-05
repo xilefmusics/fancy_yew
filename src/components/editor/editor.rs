@@ -29,6 +29,34 @@ pub enum Msg {
     Autoformat,
 }
 
+fn onsave_from_ctx(ctx: &Context<Editor>) -> Option<Closure<dyn Fn(String)>> {
+    ctx.props().onsave.clone().map(|onsave| {
+        Closure::wrap(Box::new(move |content: String| {
+            onsave.emit(content);
+        }) as Box<dyn Fn(String)>)
+    })
+}
+
+fn onautoformat_from_ctx(ctx: &Context<Editor>) -> Option<Closure<dyn Fn(String) -> String>> {
+    ctx.props().onautoformat.clone().map(|onautoformat| {
+        Closure::wrap(Box::new(move |content: String| onautoformat.emit(content))
+            as Box<dyn Fn(String) -> String>)
+    })
+}
+
+fn code_mirror_style_class_from_ctx(ctx: &Context<Editor>) -> String {
+    Style::new(format!(
+        "{} {} {} {}",
+        include_str!("code_mirror_before.css"),
+        include_str!("external_dependencies/codemirror_5.65.5_codemirror.css"),
+        include_str!("code_mirror_after.css"),
+        ctx.props().syntax_parser.style(),
+    ))
+    .expect("Unwrapping CSS should work!")
+    .get_class_name()
+    .to_string()
+}
+
 pub struct Editor {
     pub editor_name: String,
     pub code_mirror_wrapper: Option<CodeMirrorWrapper>,
@@ -42,32 +70,9 @@ impl Component for Editor {
     type Properties = Props;
 
     fn create(ctx: &Context<Self>) -> Self {
-        let onsave = {
-            ctx.props().onsave.clone().map(|onsave| {
-                Closure::wrap(Box::new(move |content: String| {
-                    onsave.emit(content);
-                }) as Box<dyn Fn(String)>)
-            })
-        };
-
-        let onautoformat = {
-            ctx.props().onautoformat.clone().map(|onautoformat| {
-                Closure::wrap(Box::new(move |content: String| onautoformat.emit(content))
-                    as Box<dyn Fn(String) -> String>)
-            })
-        };
-
-        let style = Style::new(format!(
-            "{} {} {} {} {}",
-            include_str!("code_mirror_before.css"),
-            include_str!("external_dependencies/codemirror_5.65.5_codemirror.css"),
-            include_str!("code_mirror_after.css"),
-            ctx.props().style,
-            ctx.props().syntax_parser.style(),
-        ))
-        .unwrap();
-
-        let code_mirror_style_class = style.get_class_name().to_string();
+        let onsave = onsave_from_ctx(ctx);
+        let onautoformat = onautoformat_from_ctx(ctx);
+        let code_mirror_style_class = code_mirror_style_class_from_ctx(ctx);
 
         let uuid = web_sys::window()
             .map(|window| {
@@ -158,6 +163,20 @@ impl Component for Editor {
                 }
             }
         };
+        false
+    }
+
+    fn changed(&mut self, ctx: &Context<Self>, _old_props: &Self::Properties) -> bool {
+        self.onsave = onsave_from_ctx(ctx);
+        self.onautoformat = onautoformat_from_ctx(ctx);
+        self.code_mirror_style_class = code_mirror_style_class_from_ctx(ctx);
+
+        if let Some(wrapper) = self.code_mirror_wrapper.as_mut() {
+            wrapper.set_onsave(self.onsave.as_ref());
+            wrapper.set_onautoformat(self.onautoformat.as_ref());
+            wrapper.set_content(&ctx.props().content);
+        }
+
         false
     }
 

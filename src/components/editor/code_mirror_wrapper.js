@@ -15,7 +15,7 @@ export class CodeMirrorWrapper {
             extraKeys["Shift-Alt-F"] = cm => cm.setValue(onautoformat(cm.getValue()));
         }
 
-        this.editor = new CodeMirror.fromTextArea(document.getElementById(id),{
+        this.editor = new CodeMirror.fromTextArea(document.getElementById(id), {
             lineNumbers: true,
             extraKeys: extraKeys,
             mode: "generated",
@@ -24,12 +24,33 @@ export class CodeMirrorWrapper {
         return this;
     }
 
+    set_onsave(onsave) {
+        if (this.editor) {
+            this.editor.setOption("extraKeys", {
+                ...this.editor.getOption("extraKeys"),
+                "Ctrl-S": cm => onsave(cm.getValue()),
+                "Cmd-S": cm => onsave(cm.getValue()),
+            });
+        }
+        return this;
+    }
+
+    set_onautoformat(onautoformat) {
+        if (this.editor) {
+            this.editor.setOption("extraKeys", {
+                ...this.editor.getOption("extraKeys"),
+                "Shift-Alt-F": cm => cm.setValue(onautoformat(cm.getValue())),
+            });
+        }
+        return this;
+    }
+
     set_content(content) {
         this.editor.setValue(content);
         return this;
     }
 
-    get_content_bytes(content) {
+    get_content_bytes() {
         const encoder = new TextEncoder();
         if (this.editor) {
             return encoder.encode(this.editor.getValue());

@@ -13,6 +13,16 @@ extern "C" {
         onautoformat: Option<&Closure<dyn Fn(String) -> String>>,
     ) -> CodeMirrorWrapper;
     #[wasm_bindgen(method)]
+    pub fn set_onsave(
+        this: &CodeMirrorWrapper,
+        onsave: Option<&Closure<dyn Fn(String)>>,
+    ) -> CodeMirrorWrapper;
+    #[wasm_bindgen(method)]
+    pub fn set_onautoformat(
+        this: &CodeMirrorWrapper,
+        onautoformat: Option<&Closure<dyn Fn(String) -> String>>,
+    ) -> CodeMirrorWrapper;
+    #[wasm_bindgen(method)]
     pub fn set_content(this: &CodeMirrorWrapper, content: &str) -> CodeMirrorWrapper;
     #[wasm_bindgen(method)]
     fn get_content_bytes(this: &CodeMirrorWrapper) -> Vec<u8>;
