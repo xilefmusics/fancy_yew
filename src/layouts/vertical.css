@@ -1,12 +1,31 @@
 :root {
-	--primary: #bb0000;
-	--fg1: rgba(255, 255, 255, 0.7);
-	--fg2: rgba(255, 255, 255, 0.5);
-	--bg1: #1e1e1e;
-	--bg2: #272727;
-	--bg3: #2c2c2c;
+  color-scheme: dark;
+  --primary: oklch(0.55 0.21 27);
+  --bg-dark: oklch(0.1 0 264);
+  --bg1: oklch(0.1 0 264);
+  --bg: oklch(0.2 0 264);
+  --bg2: oklch(0.2 0 264);
+  --bg-light: oklch(0.26 0 264);
+  --bg3: oklch(0.26 0 264);
+  --text: oklch(0.96 0 264);
+  --fg1: oklch(0.96 0 264);
+  --text-muted: oklch(0.76 0 264);
+  --fg2: oklch(0.76 0 264);
   font-family: "Rubik", sans-serif;
+  --shadow-s:
+      inset 0 1px 2px #ffffff50,
+      0 1px 2px #00000030,
+      0 2px 4px #00000015;
+  --shadow-m:
+      inset 0 1px 2px #ffffff50,
+      0 2px 4px #00000030,
+      0 4px 8px #00000015;
+  --shadow-l:
+      inset 0 1px 2px #ffffff70,
+      0 4px 6px #00000030,
+      0 6px 10px #00000015;
 }
+
 
 * {
   color: var(--fg1);
